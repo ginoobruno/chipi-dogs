@@ -1,25 +1,45 @@
-# CakePHP 3
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulario de información</title>
+</head>
+<body>
+	<h1>Formulario de información</h1>
+	<form id="info-form" enctype="multipart/form-data">
+		<label for="nombre">Nombre:</label>
+		<input type="text" id="nombre" name="nombre"><br>
 
-/vendor/*
-/config/app.php
+		<label for="direccion">Dirección:</label>
+		<input type="text" id="direccion" name="direccion"><br>
 
-/tmp/cache/models/*
-!/tmp/cache/models/empty
-/tmp/cache/persistent/*
-!/tmp/cache/persistent/empty
-/tmp/cache/views/*
-!/tmp/cache/views/empty
-/tmp/sessions/*
-!/tmp/sessions/empty
-/tmp/tests/*
-!/tmp/tests/empty
+		<label for="telefono">Teléfono:</label>
+		<input type="text" id="telefono" name="telefono"><br>
 
-/logs/*
-!/logs/empty
+		<label for="cartilla">Cartilla Médica:</label>
+		<input type="file" id="cartilla" name="cartilla"><br>
 
-# CakePHP 2
+		<input type="submit" value="Enviar">
+	</form>
 
-/app/tmp/*
-/app/Config/core.php
-/app/Config/database.php
-/vendors/*
+	<p id="status"></p>
+
+	<script>
+		document.getElementById('info-form').addEventListener('submit', function(e) {
+			e.preventDefault();
+			var form = e.target;
+			var formData = new FormData(form);
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'procesar.php', true);
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					document.getElementById('status').textContent = 'Completado';
+				} else {
+					document.getElementById('status').textContent = 'Error al enviar el formulario';
+				}
+			};
+			xhr.send(formData);
+		});
+	</script>
+</body>
+</html>
